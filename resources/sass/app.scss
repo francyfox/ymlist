@@ -7,6 +7,10 @@
 }
 
 table {
+    tr:nth-child(n+2):hover{
+        cursor: pointer;
+        background: rgba(0, 209, 178, 0.2) !important;
+    }
     input {
         max-height: 28px;
     }

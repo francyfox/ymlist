@@ -67,7 +67,7 @@
                                 <td class="level-right"><a id="addPoint" class="button is-small is-primary" href="#">ADD Point</a></td>
                             </tr>
                             @foreach($ymlist as $item)
-                            <tr class="item-text">
+                            <tr class="item-text" data-x="{{ $item["x"] }}" data-y="{{ $item["y"] }}">
                                 <td>
                                     <span>{{ $item["name"] }}</span>
                                     <input class="input" type="text" value="{{ $item["name"] }}" placeholder="Place Name">
