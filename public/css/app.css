@@ -1,0 +1,2 @@
+@import url(https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css);
+#myMap{height:400px;margin-right:40px;width:500px}table tr:nth-child(n+2):hover{background:rgba(0,209,178,.2)!important;cursor:pointer}table input{max-height:28px}table .item-text span{display:block}table .item-text.change span,table .item-text input{display:none}table .item-text.change input{display:block}
