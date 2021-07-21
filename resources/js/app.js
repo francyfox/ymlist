@@ -131,6 +131,7 @@ function addNewPlace(name, x, y) {
     myMap.geoObjects.add(placemark);
 }
 
+
 document.addEventListener("DOMContentLoaded", () => {
     ymaps.ready(init);
     let ymlist = new ymList();
