@@ -1,32 +1,87 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+import axios from "axios";
+// Дождёмся загрузки API и готовности DOM.
+let myMap;
+let places = [];
 
-require('./bootstrap');
+function editPlace () {
+    const buttons = document.querySelectorAll('._edit');
+    buttons.forEach((button) => {
+        button.addEventListener('click', function () {
+            this.parentElement.parentElement.classList.toggle('change');
+        })
+    });
+}
+function deletePlace () {
+    const buttons = document.querySelectorAll('._delete');
+    buttons.forEach((button) => {
+        button.addEventListener('click', function () {
+            places.splice(parseInt(this.dataset.id), 1);
+            axios.post('http://127.0.0.1:8000/map', places).catch((e) => console.log(e));
+            document.location.reload();
+        })
+    });
+}
 
-window.Vue = require('vue').default;
+function addNewPlace (name, x, y) {
+    const myGeoObject = new ymaps.GeoObject({
+        // Описание геометрии.
+        geometry: {
+            type: "Point",
+            coordinates: [x, y]
+        },
+        // Свойства.
+        properties: {
+            // Контент метки.
+            iconContent: name,
+            hintContent: name
+        }
+    });
+    myMap.geoObjects.add(myGeoObject);
+}
+function addNewPlaceByClick () {
+    document.querySelector('#addPoint').addEventListener('click', event => {
+        const placeName = document.querySelector('#namepos');
+        const xPos = document.querySelector('#xpos');
+        const yPos = document.querySelector('#ypos');
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+        addNewPlace(placeName.value, xPos.value, yPos.value);
+        places.push({
+            name: placeName.value,
+            x: xPos.value,
+            y: yPos.value
+        })
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+        axios.post('http://127.0.0.1:8000/map', places).catch((e) => console.log(e));
+    });
+}
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+function init () {
+    // Создание экземпляра карты и его привязка к контейнеру с
+    // заданным id ("map").
+    myMap = new ymaps.Map('myMap', {
+        // При инициализации карты обязательно нужно указать
+        // её центр и коэффициент масштабирования.
+        center: [55.76, 37.64], // Москва
+        zoom: 10
+    }, {
+        searchControlProvider: 'yandex#search'
+    },
+        axios.get('http://127.0.0.1:8000/ymgeo').then((response) => {
+            if (Object.keys(response.data).length !== 0) {
+                response.data.forEach((place) => {
+                    addNewPlace(place.name, place.x, place.y)
+                    places.push({name: place.name, x: place.x, y: place.y});
+                });
+            }
+        })
+    );
 
-const app = new Vue({
-    el: '#app',
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    ymaps.ready(init);
+    addNewPlaceByClick();
+    deletePlace();
+    editPlace();
 });
