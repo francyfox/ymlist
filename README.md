@@ -1,4 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://lh6.googleusercontent.com/ehOC2c-BIQDx5wwiEXpLSCnSTjGz7q4u7Ph_oPDvR6jBll6YjRWn749pOEQ_OpOv6C2zLe_XHPN1YOK_aonD=w1920-h979-rw" width="800"></a></p>
+Foto: https://drive.google.com/file/d/1HOnUMU0uxKlRLU1icO5I7mp17yFhGd5X/view?usp=sharing
 
 
 ## Task
