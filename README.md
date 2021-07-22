@@ -1,6 +1,5 @@
 Foto: https://drive.google.com/file/d/1HOnUMU0uxKlRLU1icO5I7mp17yFhGd5X/view?usp=sharing
 
-docker-compose up -d --build 
 docker-compose up -d
 
 ## Task
